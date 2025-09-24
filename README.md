@@ -4,7 +4,7 @@ Soundlib is an convenient audio library that allows you to play sound in 3D spac
 Soundlib's simple model mirrors that of OpenAL's, while abstracting away the cumbersome management of OpenAL objects. There is a single listener whose properties (position, velocity, orientation, etc.) are managed through global functions. Audio files are loaded into `Sound` objects, which are then attached to `SoundSource` objects to be played. These are the only two objects you have to deal with.
 
 Playing a sound file is as simple as this:
-```
+```cpp
 #include "soundlib.h"
 
 using namespace Soundlib;
@@ -22,7 +22,7 @@ int  main()
 }
 ```
 Before initializing, you can get a list of available playback devices and then choose the one you want:
-```
+```cpp
 auto deviceList = Soundlib::GetDeviceList();
 int selectedDeviceIndex = SelectDevice(); // Your code
 Soundlib::Initialize(deviceList[selectedDeviceIndex]);
@@ -33,7 +33,7 @@ Soundlib uses CMake for its build system. Soundlib is built as a dynamic library
 
 ### Bundled Build
 If you choose to bundle OpenAL Soft, building is as simple as running the following from the root directory:
-```
+```bash
 mkdir build
 cd build
 cmake ..
