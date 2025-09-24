@@ -3,26 +3,6 @@
 #include <vector>
 #include <string>
 
-/*
-    TODO:
-        [X] Default constructors
-        [X] Destructors
-        [ ] Error handling
-        [ ] Buffer queueing
-            - Maybe throw out SetSound() in favor of QueueSound() + GetQueueCount() + ClearQueue() + etc.?
-                - Then every source is a STREAMING source, so certain functions are prohibited (not an issue, I think)
-                - Let's look into differences between STATIC and STREAMING sources
-                - Have different objects? StaticSoundSource and StreamingSoundSource? Or only have a queueing interface, but specify the type on construction, like SoundSource(Soundlib::SourceType::STATIC, sound)
-            - People who want a low memory footprint would appreciate this
-                - Should allow user to specify buffer properties
-                - Need to look into details of memory usage. I'd rather not have open files while waiting to buffer.
-        [X] Ensure multiple SoundSources can play same Sound simultaneously
-        [X] Device selection
-        [X] Parameter checks
-        [ ] Ensure this works for OGG, MP3, FLAC
-        [X] Remaining source properties
-*/
-
 namespace Soundlib
 {
     struct Vector3
