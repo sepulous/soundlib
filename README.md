@@ -9,7 +9,7 @@ Playing a sound file is as simple as this:
 
 using namespace Soundlib;
 
-int  main()
+int main()
 {
 	Soundlib::Initialize();
 
