@@ -29,7 +29,7 @@ Soundlib::Initialize(deviceList[selectedDeviceIndex]);
 ```
 
 # Building
-Soundlib uses CMake for its build system. Soundlib is built as a dynamic library by default, but it can be built as a static library through the CMake option `STATIC_SOUNDLIB`. You can also choose whether to bundle OpenAL Soft or use a system-installed version through the `BUNDLE_OPENAL` option.
+Soundlib uses CMake for its build system. Soundlib is built as a dynamic library by default, but it can be built as a static library through the CMake option `STATIC_SOUNDLIB`. You can also choose whether to bundle OpenAL Soft or use a system-installed version through the `BUNDLE_OPENAL` option. On Windows, OpenAL is bundled by default. For other systems it's assumed that OpenAL Soft is installed system-wide.
 
 ### Bundled Build
 If you choose to bundle OpenAL Soft, building is as simple as running the following from the root directory:
