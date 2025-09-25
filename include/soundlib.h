@@ -110,7 +110,7 @@ namespace Soundlib
 
     bool Init();
     bool Init(std::string);
-    void Exit();
+    void Exit(); // This doesn't strictly need to be called at the end of the program, but some OpenAL implementations will complain if you don't
     std::vector<std::string> GetDeviceList();
 
     DistanceModel GetDistanceModel();
