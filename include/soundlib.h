@@ -110,6 +110,7 @@ namespace Soundlib
 
     bool Initialize();
     bool Initialize(std::string);
+    void Exit();
     std::vector<std::string> GetDeviceList();
 
     DistanceModel GetDistanceModel();

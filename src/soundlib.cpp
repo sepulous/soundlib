@@ -33,6 +33,16 @@ bool Soundlib::Initialize(std::string deviceName)
     return false;
 }
 
+// This doesn't strictly need to be called at the end of the program, but some OpenAL implementations will complain if you don't
+void Soundlib::Exit()
+{
+    ALCcontext* context = alcGetCurrentContext();
+    ALCdevice* device = alcGetContextsDevice(context);
+    alcMakeContextCurrent(NULL);
+    alcDestroyContext(context);
+    alcCloseDevice(device);
+}
+
 std::vector<std::string> Soundlib::GetDeviceList()
 {
     if (alcIsExtensionPresent(NULL, "ALC_ENUMERATE_ALL_EXT") == AL_TRUE)
