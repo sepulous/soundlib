@@ -108,8 +108,8 @@ namespace Soundlib
             void SetLooping(bool);
     };
 
-    bool Initialize();
-    bool Initialize(std::string);
+    bool Init();
+    bool Init(std::string);
     void Exit();
     std::vector<std::string> GetDeviceList();
 

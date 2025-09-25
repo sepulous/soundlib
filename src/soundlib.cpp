@@ -9,7 +9,7 @@
 
 using namespace Soundlib;
 
-bool Soundlib::Initialize()
+bool Soundlib::Init()
 {
     ALCdevice* device = alcOpenDevice(nullptr);
     if (device)
@@ -21,7 +21,7 @@ bool Soundlib::Initialize()
     return false;
 }
 
-bool Soundlib::Initialize(std::string deviceName)
+bool Soundlib::Init(std::string deviceName)
 {
     ALCdevice* device = alcOpenDevice(deviceName.c_str());
     if (device)
