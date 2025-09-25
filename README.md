@@ -11,7 +11,7 @@ using namespace Soundlib;
 
 int main()
 {
-	Soundlib::Initialize();
+	Soundlib::Init();
 
 	Sound sound("/path/to/sound.wav");
 
@@ -19,13 +19,15 @@ int main()
 	source.Play();
 
 	while (source.GetState() == SourceState::PLAYING) {}
+
+    Soundlib::Exit();
 }
 ```
 Before initializing, you can get a list of available playback devices and then choose the one you want:
 ```cpp
 auto deviceList = Soundlib::GetDeviceList();
 int selectedDeviceIndex = SelectDevice(); // Your code
-Soundlib::Initialize(deviceList[selectedDeviceIndex]);
+Soundlib::Init(deviceList[selectedDeviceIndex]);
 ```
 
 # Building
