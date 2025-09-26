@@ -136,6 +136,18 @@ void Soundlib::SoundSource::SetMaxDistance(float maxDistance)
     alSourcef(m_source, AL_MAX_DISTANCE, maxDistance);
 }
 
+float Soundlib::SoundSource::GetReferenceDistance()
+{
+    ALfloat refDistance;
+    alGetSourcef(m_source, AL_REFERENCE_DISTANCE, &refDistance);
+    return refDistance;
+}
+
+void Soundlib::SoundSource::SetReferenceDistance(float refDistance)
+{
+    alSourcef(m_source, AL_REFERENCE_DISTANCE, refDistance);
+}
+
 float Soundlib::SoundSource::GetRolloffFactor()
 {
     ALfloat rolloffFactor;

@@ -77,6 +77,9 @@ namespace Soundlib
             float GetMaxDistance();
             void SetMaxDistance(float);
 
+            float GetReferenceDistance();
+            void SetReferenceDistance(float);
+
             float GetRolloffFactor();
             void SetRolloffFactor(float);
 
@@ -110,7 +113,7 @@ namespace Soundlib
 
     bool Init();
     bool Init(std::string);
-    void Exit(); // This doesn't strictly need to be called at the end of the program, but some OpenAL implementations will complain if you don't
+    void Exit();
     std::vector<std::string> GetDeviceList();
 
     DistanceModel GetDistanceModel();
