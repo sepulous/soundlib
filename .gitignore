@@ -1,4 +1,5 @@
 .vscode/
 dev-headers/
 build/
+test/
 NOTES.txt
