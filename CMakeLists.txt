@@ -1,17 +1,19 @@
 cmake_minimum_required(VERSION 3.13)
 project(Soundlib LANGUAGES CXX C)
 
-option(STATIC_SOUNDLIB "Build Soundlib as a static library")
+option(STATIC_SOUNDLIB "Build Soundlib as static library" OFF)
 if (WIN32)
-    option(BUNDLE_OPENAL "Bundle OpenAL Soft instead of using system library" ON) # Better default for Windows
+    option(USE_SYSTEM_OPENAL "Use system-installed OpenAL implementation" OFF)
 else()
-    option(BUNDLE_OPENAL "Bundle OpenAL Soft instead of using system library" OFF)
+    option(USE_SYSTEM_OPENAL "Use system-installed OpenAL implementation" ON)
 endif()
 
 # -------------------------------
 # OpenAL
 # -------------------------------
-if (BUNDLE_OPENAL)
+if (USE_SYSTEM_OPENAL)
+    find_package(OpenAL REQUIRED)
+else()
     include(FetchContent)
     FetchContent_Declare(
         openal-soft
@@ -19,10 +21,11 @@ if (BUNDLE_OPENAL)
         GIT_TAG 1.24.3
     )
     FetchContent_MakeAvailable(openal-soft)
-    set(OPENAL_LIB OpenAL::OpenAL)
-else()
-    find_package(OpenAL REQUIRED)
-    set(OPENAL_LIB OpenAL::OpenAL)
+
+    # Create consistent name for target_link_libraries
+    if (NOT TARGET OpenAL::OpenAL AND TARGET OpenAL)
+        add_library(OpenAL::OpenAL ALIAS OpenAL)
+    endif()
 endif()
 
 # -------------------------------
@@ -45,25 +48,19 @@ else()
         src/sound_source.cpp
     )
 endif()
+target_include_directories(Soundlib
+    PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+)
+target_link_libraries(Soundlib PRIVATE OpenAL::OpenAL)
 
-target_include_directories(Soundlib PUBLIC include)
-target_link_libraries(Soundlib PRIVATE ${OPENAL_LIB})
-
-# Copy OpenAL DLL next to library (if bundling on Windows)
-if (WIN32 AND BUNDLE_OPENAL)
+# --------------------------
+# Copy OpenAL library if built locally
+# --------------------------
+if (NOT USE_SYSTEM_OPENAL)
     add_custom_command(TARGET Soundlib POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
-            $<TARGET_FILE:OpenAL::OpenAL>
+            $<TARGET_FILE:OpenAL>
             $<TARGET_FILE_DIR:Soundlib>
     )
 endif()
-
-# -------------------------------
-# Install rules
-# -------------------------------
-install(TARGETS Soundlib
-    RUNTIME DESTINATION bin
-    LIBRARY DESTINATION lib
-    ARCHIVE DESTINATION lib
-)
-install(DIRECTORY include/ DESTINATION include)
