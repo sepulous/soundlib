@@ -31,7 +31,7 @@ Soundlib::Init(deviceList[selectedDeviceIndex]);
 ```
 
 # Building
-Soundlib uses CMake for its build system. Soundlib is built as a dynamic library by default, but it can be built as a static library through the CMake option `STATIC_SOUNDLIB`. You can also choose whether to automatically fetch and build OpenAL Soft or use a system-installed version through the `USE_SYSTEM_OPENAL` option. On Windows the default is to build OpenAL Soft, but for other systems the default is to find a system-installed version.
+Soundlib uses CMake for its build system. Soundlib is built as a dynamic library by default, but it can be built as a static library through the CMake option `STATIC_SOUNDLIB=ON`. You can also choose whether to automatically fetch and build OpenAL Soft or use a system-installed version through the `USE_SYSTEM_OPENAL=ON` option. On Windows the default is to build OpenAL Soft, but for other systems the default is to find a system-installed version.
 
 # TODO
 I'm actively working on the following features:
