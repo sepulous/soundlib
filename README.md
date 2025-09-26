@@ -38,4 +38,4 @@ I'm actively working on the following features:
 * Changing playback device after initialization
 * Buffer queuing
 * Support for OpenAL EFX (reverb, filters, etc.)
-* More systematic error handling
+* Systematic error handling
