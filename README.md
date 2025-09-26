@@ -29,6 +29,7 @@ auto deviceList = Soundlib::GetDeviceList();
 int selectedDeviceIndex = SelectDevice(); // Your code
 Soundlib::Init(deviceList[selectedDeviceIndex]);
 ```
+See the `examples` folder for more information.
 
 # Building
 Soundlib uses CMake for its build system. Soundlib is built as a dynamic library by default, but it can be built as a static library through the CMake option `STATIC_SOUNDLIB=ON`. You can also choose whether to automatically fetch and build OpenAL Soft or use a system-installed version through the `USE_SYSTEM_OPENAL` option. On Windows the default is to build OpenAL Soft, but for other systems the default is to find a system-installed version.
