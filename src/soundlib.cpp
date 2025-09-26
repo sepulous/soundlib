@@ -11,10 +11,10 @@ using namespace Soundlib;
 
 bool Soundlib::Init()
 {
-    ALCdevice* device = alcOpenDevice(nullptr);
+    ALCdevice* device = alcOpenDevice(NULL);
     if (device)
     {
-        ALCcontext* context = alcCreateContext(device, nullptr);
+        ALCcontext* context = alcCreateContext(device, NULL);
         alcMakeContextCurrent(context);
         return true;
     }
@@ -26,7 +26,7 @@ bool Soundlib::Init(std::string deviceName)
     ALCdevice* device = alcOpenDevice(deviceName.c_str());
     if (device)
     {
-        ALCcontext* context = alcCreateContext(device, nullptr);
+        ALCcontext* context = alcCreateContext(device, NULL);
         alcMakeContextCurrent(context);
         return true;
     }
