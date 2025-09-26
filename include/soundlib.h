@@ -16,7 +16,7 @@ namespace Soundlib
         Vector3 up;      // Direction listener's head points
     };
 
-    enum DistanceModel : int
+    enum AttenuationModel : int
     {
         INVERSE_DISTANCE,
         INVERSE_DISTANCE_CLAMPED, // OpenAL default
@@ -116,8 +116,8 @@ namespace Soundlib
     void Exit();
     std::vector<std::string> GetDeviceList();
 
-    DistanceModel GetDistanceModel();
-    void SetDistanceModel(DistanceModel);
+    AttenuationModel GetAttenuationModel();
+    void SetAttenuationModel(AttenuationModel);
 
     float GetDopplerFactor();
     void SetDopplerFactor(float);

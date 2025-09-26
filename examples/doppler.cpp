@@ -15,7 +15,7 @@ int main()
     // OpenAL should default to these settings, but just to be sure
     Soundlib::SetDopplerFactor(1.0F);
     Soundlib::SetSpeedOfSound(343.3F);
-    Soundlib::SetDistanceModel(Soundlib::DistanceModel::INVERSE_DISTANCE_CLAMPED);
+    Soundlib::SetAttenuationModel(Soundlib::AttenuationModel::INVERSE_DISTANCE_CLAMPED);
 
     // Position/orient listener
     Soundlib::SetListenerPosition({0, 0, 0});

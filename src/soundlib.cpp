@@ -75,32 +75,32 @@ std::vector<std::string> Soundlib::GetDeviceList()
     }
 }
 
-DistanceModel Soundlib::GetDistanceModel()
+AttenuationModel Soundlib::GetAttenuationModel()
 {
-    ALint distanceModel = alGetInteger(AL_DISTANCE_MODEL);
-    switch (distanceModel)
+    ALint attenuationModel = alGetInteger(AL_DISTANCE_MODEL);
+    switch (attenuationModel)
     {
-        case AL_INVERSE_DISTANCE:          return Soundlib::DistanceModel::INVERSE_DISTANCE;
-        case AL_INVERSE_DISTANCE_CLAMPED:  return Soundlib::DistanceModel::INVERSE_DISTANCE_CLAMPED;
-        case AL_LINEAR_DISTANCE:           return Soundlib::DistanceModel::LINEAR_DISTANCE;
-        case AL_LINEAR_DISTANCE_CLAMPED:   return Soundlib::DistanceModel::LINEAR_DISTANCE_CLAMPED;
-        case AL_EXPONENT_DISTANCE:         return Soundlib::DistanceModel::EXPONENT_DISTANCE;
-        case AL_EXPONENT_DISTANCE_CLAMPED: return Soundlib::DistanceModel::EXPONENT_DISTANCE_CLAMPED;
-        default:                           return Soundlib::DistanceModel::INVERSE_DISTANCE_CLAMPED;
+        case AL_INVERSE_DISTANCE:          return AttenuationModel::INVERSE_DISTANCE;
+        case AL_INVERSE_DISTANCE_CLAMPED:  return AttenuationModel::INVERSE_DISTANCE_CLAMPED;
+        case AL_LINEAR_DISTANCE:           return AttenuationModel::LINEAR_DISTANCE;
+        case AL_LINEAR_DISTANCE_CLAMPED:   return AttenuationModel::LINEAR_DISTANCE_CLAMPED;
+        case AL_EXPONENT_DISTANCE:         return AttenuationModel::EXPONENT_DISTANCE;
+        case AL_EXPONENT_DISTANCE_CLAMPED: return AttenuationModel::EXPONENT_DISTANCE_CLAMPED;
+        default:                           return AttenuationModel::INVERSE_DISTANCE_CLAMPED;
     }
 }
 
-void Soundlib::SetDistanceModel(DistanceModel distanceModel)
+void Soundlib::SetAttenuationModel(AttenuationModel attenuationModel)
 {
-    switch (distanceModel)
+    switch (attenuationModel)
     {
-        case DistanceModel::INVERSE_DISTANCE:          alDistanceModel(AL_INVERSE_DISTANCE);
-        case DistanceModel::INVERSE_DISTANCE_CLAMPED:  alDistanceModel(AL_INVERSE_DISTANCE_CLAMPED);
-        case DistanceModel::LINEAR_DISTANCE:           alDistanceModel(AL_LINEAR_DISTANCE);
-        case DistanceModel::LINEAR_DISTANCE_CLAMPED:   alDistanceModel(AL_LINEAR_DISTANCE_CLAMPED);
-        case DistanceModel::EXPONENT_DISTANCE:         alDistanceModel(AL_EXPONENT_DISTANCE);
-        case DistanceModel::EXPONENT_DISTANCE_CLAMPED: alDistanceModel(AL_EXPONENT_DISTANCE_CLAMPED);
-        default:                                       alDistanceModel(AL_INVERSE_DISTANCE_CLAMPED);
+        case AttenuationModel::INVERSE_DISTANCE:          alDistanceModel(AL_INVERSE_DISTANCE);
+        case AttenuationModel::INVERSE_DISTANCE_CLAMPED:  alDistanceModel(AL_INVERSE_DISTANCE_CLAMPED);
+        case AttenuationModel::LINEAR_DISTANCE:           alDistanceModel(AL_LINEAR_DISTANCE);
+        case AttenuationModel::LINEAR_DISTANCE_CLAMPED:   alDistanceModel(AL_LINEAR_DISTANCE_CLAMPED);
+        case AttenuationModel::EXPONENT_DISTANCE:         alDistanceModel(AL_EXPONENT_DISTANCE);
+        case AttenuationModel::EXPONENT_DISTANCE_CLAMPED: alDistanceModel(AL_EXPONENT_DISTANCE_CLAMPED);
+        default:                                          alDistanceModel(AL_INVERSE_DISTANCE_CLAMPED);
     }
 }
 
