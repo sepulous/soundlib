@@ -81,7 +81,6 @@ AttenuationModel Soundlib::GetAttenuationModel()
     switch (attenuationModel)
     {
         case AL_INVERSE_DISTANCE:          return AttenuationModel::INVERSE_DISTANCE;
-        case AL_INVERSE_DISTANCE_CLAMPED:  return AttenuationModel::INVERSE_DISTANCE_CLAMPED;
         case AL_LINEAR_DISTANCE:           return AttenuationModel::LINEAR_DISTANCE;
         case AL_LINEAR_DISTANCE_CLAMPED:   return AttenuationModel::LINEAR_DISTANCE_CLAMPED;
         case AL_EXPONENT_DISTANCE:         return AttenuationModel::EXPONENT_DISTANCE;
@@ -95,7 +94,6 @@ void Soundlib::SetAttenuationModel(AttenuationModel attenuationModel)
     switch (attenuationModel)
     {
         case AttenuationModel::INVERSE_DISTANCE:          alDistanceModel(AL_INVERSE_DISTANCE);
-        case AttenuationModel::INVERSE_DISTANCE_CLAMPED:  alDistanceModel(AL_INVERSE_DISTANCE_CLAMPED);
         case AttenuationModel::LINEAR_DISTANCE:           alDistanceModel(AL_LINEAR_DISTANCE);
         case AttenuationModel::LINEAR_DISTANCE_CLAMPED:   alDistanceModel(AL_LINEAR_DISTANCE_CLAMPED);
         case AttenuationModel::EXPONENT_DISTANCE:         alDistanceModel(AL_EXPONENT_DISTANCE);
