@@ -34,6 +34,14 @@ namespace Soundlib
         STOPPED
     };
 
+    enum SoundFormat : int
+    {
+        MONO8,
+        STEREO8,
+        MONO16,
+        STEREO16
+    };
+
     class Sound
     {
         friend class SoundSource;
@@ -45,7 +53,9 @@ namespace Soundlib
             ~Sound();
             Sound();
             Sound(const char*);
+            Sound(const char*, SoundFormat, float); // Only for RAW audio
             void LoadSound(const char*);
+            void LoadSoundRaw(const char*, SoundFormat, float);
     };
 
     class SoundSource
