@@ -2,7 +2,7 @@
 
 int main()
 {
-    // Acquire default audio device
+    // Acquire default audio device and create OpenAL context
     Soundlib::Init();
 
     // Load sound
@@ -13,7 +13,7 @@ int main()
     source.Play();
 
     /*
-        Alternatively, you can load a sound after constructing a SoundSource as follows:
+        Alternatively, you can attach a Sound after construction as follows:
             Soundlib::SoundSource source;
             source.SetSound(sound);
     */
