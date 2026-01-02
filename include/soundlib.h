@@ -54,6 +54,10 @@ namespace Soundlib
             Sound();
             Sound(const char*);
             Sound(const char*, SoundFormat, float); // Only for RAW audio
+
+            Sound(const Sound&) = delete;
+            Sound& operator=(const Sound&) = delete;
+
             void LoadSound(const char*);
             void LoadSoundRaw(const char*, SoundFormat, float);
     };
@@ -66,11 +70,11 @@ namespace Soundlib
         public:
             ~SoundSource();
             SoundSource();
-            SoundSource(Sound);
+            SoundSource(const Sound&);
 
             SourceState GetState();
 
-            void SetSound(Sound);
+            void SetSound(const Sound&);
             void Play();
             void Pause();
             void Stop();

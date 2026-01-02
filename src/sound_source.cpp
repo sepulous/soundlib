@@ -25,7 +25,7 @@ Soundlib::SoundSource::SoundSource()
     }
 }
 
-Soundlib::SoundSource::SoundSource(Sound sound)
+Soundlib::SoundSource::SoundSource(const Sound& sound)
 {
     ALenum error;
 
@@ -46,7 +46,7 @@ Soundlib::SoundSource::SoundSource(Sound sound)
     }
 }
 
-void Soundlib::SoundSource::SetSound(Sound sound)
+void Soundlib::SoundSource::SetSound(const Sound& sound)
 {
     ALenum error;
 
