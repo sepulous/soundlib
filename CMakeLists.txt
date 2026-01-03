@@ -1,20 +1,17 @@
-cmake_minimum_required(VERSION 3.13)
+cmake_minimum_required(VERSION 3.20)
 project(Soundlib LANGUAGES CXX C)
 
 option(STATIC_SOUNDLIB "Build Soundlib as static library" OFF)
-if (WIN32)
-    option(USE_SYSTEM_OPENAL "Use system-installed OpenAL implementation" OFF)
-else()
-    option(USE_SYSTEM_OPENAL "Use system-installed OpenAL implementation" ON)
-endif()
+option(USE_SYSTEM_OPENAL "Use system-installed OpenAL implementation" ON)
+
+include(FetchContent)
 
 # -------------------------------
-# OpenAL
+# OpenAL Soft
 # -------------------------------
 if (USE_SYSTEM_OPENAL)
     find_package(OpenAL REQUIRED)
 else()
-    include(FetchContent)
     FetchContent_Declare(
         openal-soft
         GIT_REPOSITORY https://github.com/kcat/openal-soft.git
@@ -23,7 +20,7 @@ else()
     FetchContent_MakeAvailable(openal-soft)
 
     # Create consistent name for target_link_libraries
-    if (NOT TARGET OpenAL::OpenAL AND TARGET OpenAL)
+    if (TARGET OpenAL AND NOT TARGET OpenAL::OpenAL)
         add_library(OpenAL::OpenAL ALIAS OpenAL)
     endif()
 endif()
@@ -31,36 +28,23 @@ endif()
 # -------------------------------
 # Soundlib
 # -------------------------------
+set(SOUNDLIB_SOURCES
+    src/stb_vorbis.c
+    src/miniaudio.c
+    src/soundlib.cpp
+    src/sound.cpp
+    src/sound_source.cpp
+)
+
 if (STATIC_SOUNDLIB)
-    add_library(Soundlib STATIC
-        src/stb_vorbis.c
-        src/miniaudio.c
-        src/soundlib.cpp
-        src/sound.cpp
-        src/sound_source.cpp
-    )
+    add_library(Soundlib STATIC ${SOUNDLIB_SOURCES})
 else()
-    add_library(Soundlib SHARED
-        src/stb_vorbis.c
-        src/miniaudio.c
-        src/soundlib.cpp
-        src/sound.cpp
-        src/sound_source.cpp
-    )
+    add_library(Soundlib SHARED ${SOUNDLIB_SOURCES})
 endif()
+
 target_include_directories(Soundlib
     PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include>
 )
-target_link_libraries(Soundlib PRIVATE OpenAL::OpenAL)
-
-# --------------------------
-# Copy OpenAL library if built locally
-# --------------------------
-if (NOT USE_SYSTEM_OPENAL)
-    add_custom_command(TARGET Soundlib POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_if_different
-            $<TARGET_FILE:OpenAL>
-            $<TARGET_FILE_DIR:Soundlib>
-    )
-endif()
+target_link_libraries(Soundlib PUBLIC OpenAL::OpenAL)
