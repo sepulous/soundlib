@@ -16,7 +16,7 @@ namespace Soundlib
         Vector3 up;      // Direction listener's head points
     };
 
-    enum AttenuationModel : int
+    enum class AttenuationModel : int
     {
         INVERSE_DISTANCE,
         INVERSE_DISTANCE_CLAMPED, // OpenAL default
@@ -26,7 +26,7 @@ namespace Soundlib
         EXPONENT_DISTANCE_CLAMPED
     };
 
-    enum SourceState : int
+    enum class SourceState : int
     {
         INITIAL,
         PLAYING,
@@ -34,7 +34,7 @@ namespace Soundlib
         STOPPED
     };
 
-    enum SoundFormat : int
+    enum class SoundFormat : int
     {
         MONO8,
         STEREO8,
