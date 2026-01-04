@@ -52,8 +52,8 @@ namespace Soundlib
         public:
             ~Sound();
             Sound();
-            Sound(const char*);
-            Sound(const char*, SoundFormat, float); // Only for RAW audio
+            Sound(const std::string&);
+            Sound(const std::string&, SoundFormat, float); // Only for RAW audio
 
             Sound(const Sound&) = delete;
             Sound& operator=(const Sound&) = delete;
@@ -61,8 +61,8 @@ namespace Soundlib
             Sound(Sound&&) = delete;
             Sound& operator=(Sound&&) = delete;
 
-            void LoadSound(const char*);
-            void LoadSoundRaw(const char*, SoundFormat, float);
+            void LoadSound(const std::string&);
+            void LoadSoundRaw(const std::string&, SoundFormat, float);
     };
 
     class SoundSource
@@ -129,7 +129,7 @@ namespace Soundlib
     };
 
     bool Init();
-    bool Init(std::string);
+    bool Init(const std::string&);
     void Exit();
     std::vector<std::string> GetDeviceList();
 

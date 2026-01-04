@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 #include <sstream>
 #include <cstdlib>
 
@@ -21,7 +22,7 @@ bool Soundlib::Init()
     return false;
 }
 
-bool Soundlib::Init(std::string deviceName)
+bool Soundlib::Init(const std::string& deviceName)
 {
     ALCdevice* device = alcOpenDevice(deviceName.c_str());
     if (device)
@@ -68,11 +69,8 @@ std::vector<std::string> Soundlib::GetDeviceList()
         }
         return deviceList;
     }
-    else
-    {
-        std::vector<std::string> empty;
-        return empty;
-    }
+
+    return {};
 }
 
 AttenuationModel Soundlib::GetAttenuationModel()

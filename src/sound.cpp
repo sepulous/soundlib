@@ -27,7 +27,7 @@ Soundlib::Sound::Sound()
     }
 }
 
-Soundlib::Sound::Sound(const char* filepath)
+Soundlib::Sound::Sound(const std::string& filepath)
 {
     ALenum error;
 
@@ -43,7 +43,7 @@ Soundlib::Sound::Sound(const char* filepath)
     LoadSound(filepath);
 }
 
-Soundlib::Sound::Sound(const char* filepath, SoundFormat format, float sampleRate)
+Soundlib::Sound::Sound(const std::string& filepath, SoundFormat format, float sampleRate)
 {
     ALenum error;
 
@@ -59,14 +59,14 @@ Soundlib::Sound::Sound(const char* filepath, SoundFormat format, float sampleRat
     LoadSoundRaw(filepath, format, sampleRate);
 }
 
-void Soundlib::Sound::LoadSound(const char* filepath)
+void Soundlib::Sound::LoadSound(const std::string& filepath)
 {
     ALenum error;
     
     ma_decoder decoder;
     ma_result result;
     ma_decoder_config config = ma_decoder_config_init(ma_format_s16, 0, 0);
-    result = ma_decoder_init_file(filepath, &config, &decoder);
+    result = ma_decoder_init_file(filepath.c_str(), &config, &decoder);
     if (result != MA_SUCCESS)
     {
         std::cerr << "Failed to open file: " << filepath << "\n";
@@ -100,7 +100,7 @@ void Soundlib::Sound::LoadSound(const char* filepath)
     }
 }
 
-void Soundlib::Sound::LoadSoundRaw(const char* filepath, SoundFormat format, float sampleRate)
+void Soundlib::Sound::LoadSoundRaw(const std::string& filepath, SoundFormat format, float sampleRate)
 {
     ALenum error;
 
