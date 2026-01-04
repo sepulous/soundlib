@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.20)
 project(Soundlib LANGUAGES CXX C)
 
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 option(STATIC_SOUNDLIB "Build Soundlib as static library" OFF)
 option(USE_SYSTEM_OPENAL "Use system-installed OpenAL implementation" ON)
 
