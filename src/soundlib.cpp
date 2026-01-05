@@ -73,7 +73,7 @@ std::vector<std::string> Soundlib::GetDeviceList()
     return {};
 }
 
-AttenuationModel Soundlib::GetAttenuationModel()
+AttenuationModel Soundlib::GetAttenuationModel() noexcept
 {
     ALint attenuationModel = alGetInteger(AL_DISTANCE_MODEL);
     switch (attenuationModel)
@@ -87,7 +87,7 @@ AttenuationModel Soundlib::GetAttenuationModel()
     }
 }
 
-void Soundlib::SetAttenuationModel(AttenuationModel attenuationModel)
+void Soundlib::SetAttenuationModel(AttenuationModel attenuationModel) noexcept
 {
     switch (attenuationModel)
     {
@@ -100,73 +100,73 @@ void Soundlib::SetAttenuationModel(AttenuationModel attenuationModel)
     }
 }
 
-float Soundlib::GetDopplerFactor()
+float Soundlib::GetDopplerFactor() noexcept
 {
     return alGetFloat(AL_DOPPLER_FACTOR);
 }
 
-void Soundlib::SetDopplerFactor(float factor)
+void Soundlib::SetDopplerFactor(float factor) noexcept
 {
     alDopplerFactor(factor);
 }
 
-float Soundlib::GetSpeedOfSound()
+float Soundlib::GetSpeedOfSound() noexcept
 {
     return alGetFloat(AL_SPEED_OF_SOUND);
 }
 
-void Soundlib::SetSpeedOfSound(float speed)
+void Soundlib::SetSpeedOfSound(float speed) noexcept
 {
     alSpeedOfSound(speed);
 }
 
-void Soundlib::SetListenerVolume(float volume)
+void Soundlib::SetListenerVolume(float volume) noexcept
 {
     alListenerf(AL_GAIN, volume);
 }
 
-float Soundlib::GetListenerVolume()
+float Soundlib::GetListenerVolume() noexcept
 {
     ALfloat volume;
     alGetListenerf(AL_GAIN, &volume);
     return volume;
 }
 
-void Soundlib::SetListenerPosition(float x, float y, float z)
+void Soundlib::SetListenerPosition(float x, float y, float z) noexcept
 {
     alListener3f(AL_POSITION, x, y, z);
 }
 
-void Soundlib::SetListenerPosition(Vector3 position)
+void Soundlib::SetListenerPosition(Vector3 position) noexcept
 {
     alListener3f(AL_POSITION, position.x, position.y, position.z);
 }
 
-Vector3 Soundlib::GetListenerPosition()
+Vector3 Soundlib::GetListenerPosition() noexcept
 {
     Vector3 position;
     alGetListener3f(AL_POSITION, &position.x, &position.y, &position.z);
     return position;
 }
 
-void Soundlib::SetListenerVelocity(float velX, float velY, float velZ)
+void Soundlib::SetListenerVelocity(float velX, float velY, float velZ) noexcept
 {
     alListener3f(AL_VELOCITY, velX, velY, velZ);
 }
 
-void Soundlib::SetListenerVelocity(Vector3 velocity)
+void Soundlib::SetListenerVelocity(Vector3 velocity) noexcept
 {
     alListener3f(AL_VELOCITY, velocity.x, velocity.y, velocity.z);
 }
 
-Vector3 Soundlib::GetListenerVelocity()
+Vector3 Soundlib::GetListenerVelocity() noexcept
 {
     Vector3 velocity;
     alGetListener3f(AL_VELOCITY, &velocity.x, &velocity.y, &velocity.z);
     return velocity;
 }
 
-void Soundlib::SetListenerOrientation(float forwardX, float forwardY, float forwardZ, float upX, float upY, float upZ)
+void Soundlib::SetListenerOrientation(float forwardX, float forwardY, float forwardZ, float upX, float upY, float upZ) noexcept
 {
     ALfloat values[6] = {
         forwardX, forwardY, forwardZ,
@@ -175,7 +175,7 @@ void Soundlib::SetListenerOrientation(float forwardX, float forwardY, float forw
     alListenerfv(AL_ORIENTATION, values);
 }
 
-void Soundlib::SetListenerOrientation(Vector3 forward, Vector3 up)
+void Soundlib::SetListenerOrientation(Vector3 forward, Vector3 up) noexcept
 {
     ALfloat values[6] = {
         forward.x, forward.y, forward.z,
@@ -184,12 +184,12 @@ void Soundlib::SetListenerOrientation(Vector3 forward, Vector3 up)
     alListenerfv(AL_ORIENTATION, values);
 }
 
-void Soundlib::SetListenerOrientation(Orientation o)
+void Soundlib::SetListenerOrientation(Orientation o) noexcept
 {
     alListenerfv(AL_ORIENTATION, (ALfloat*)&o);
 }
 
-Orientation Soundlib::GetListenerOrientation()
+Orientation Soundlib::GetListenerOrientation() noexcept
 {
     Orientation o;
     alGetListenerfv(AL_ORIENTATION, (ALfloat*)&o);
