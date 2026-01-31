@@ -85,6 +85,7 @@ void Soundlib::Sound::LoadSound(const std::string& filepath)
     {
         std::cerr << "Failed to read all frames.\n";
         ma_decoder_uninit(&decoder);
+        free(pcmData);
         return;
     }
     ma_decoder_uninit(&decoder);
@@ -96,8 +97,11 @@ void Soundlib::Sound::LoadSound(const std::string& filepath)
     {
         std::cerr << "OpenAL ERROR: " << error << std::endl;
         alDeleteBuffers(1, &m_buffer);
+        free(pcmData);
         return;
     }
+
+    free(pcmData);
 }
 
 void Soundlib::Sound::LoadSoundRaw(const std::string& filepath, SoundFormat format, float sampleRate)
