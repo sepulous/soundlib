@@ -46,9 +46,6 @@ namespace Soundlib
     {
         friend class SoundSource;
 
-        private:
-            unsigned m_buffer;
-
         public:
             ~Sound();
             Sound();
@@ -63,17 +60,23 @@ namespace Soundlib
 
             void LoadSound(const std::string&);
             void LoadSoundRaw(const std::string&, SoundFormat, float);
+
+        private:
+            unsigned buffer_;
     };
 
     class SoundSource
     {
-        private:
-            unsigned m_source;
-
         public:
             ~SoundSource();
             SoundSource();
             SoundSource(const Sound&);
+
+            SoundSource(const SoundSource&) = delete;
+            SoundSource& operator=(const SoundSource&) = delete;
+
+            SoundSource(SoundSource&&) = delete;
+            SoundSource& operator=(SoundSource&&) = delete;
 
             SourceState GetState() noexcept;
 
@@ -126,6 +129,9 @@ namespace Soundlib
 
             bool IsLooping() noexcept;
             void SetLooping(bool) noexcept;
+
+        private:
+            unsigned source_;
     };
 
     bool Init();

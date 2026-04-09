@@ -10,7 +10,7 @@
 
 Soundlib::Sound::~Sound()
 {
-    alDeleteBuffers(1, &m_buffer);
+    alDeleteBuffers(1, &buffer_);
 }
 
 Soundlib::Sound::Sound()
@@ -18,11 +18,11 @@ Soundlib::Sound::Sound()
     ALenum error;
 
     // Create buffer
-    alGenBuffers(1, &m_buffer);
+    alGenBuffers(1, &buffer_);
     if ((error = alGetError()) != AL_NO_ERROR)
     {
         std::cerr << "OpenAL ERROR: " << error << std::endl;
-        alDeleteBuffers(1, &m_buffer);
+        alDeleteBuffers(1, &buffer_);
         return;
     }
 }
@@ -32,11 +32,11 @@ Soundlib::Sound::Sound(const std::string& filepath)
     ALenum error;
 
     // Create buffer
-    alGenBuffers(1, &m_buffer);
+    alGenBuffers(1, &buffer_);
     if ((error = alGetError()) != AL_NO_ERROR)
     {
         std::cerr << "OpenAL ERROR: " << error << std::endl;
-        alDeleteBuffers(1, &m_buffer);
+        alDeleteBuffers(1, &buffer_);
         return;
     }
 
@@ -48,11 +48,11 @@ Soundlib::Sound::Sound(const std::string& filepath, SoundFormat format, float sa
     ALenum error;
 
     // Create buffer
-    alGenBuffers(1, &m_buffer);
+    alGenBuffers(1, &buffer_);
     if ((error = alGetError()) != AL_NO_ERROR)
     {
         std::cerr << "OpenAL ERROR: " << error << std::endl;
-        alDeleteBuffers(1, &m_buffer);
+        alDeleteBuffers(1, &buffer_);
         return;
     }
 
@@ -92,11 +92,11 @@ void Soundlib::Sound::LoadSound(const std::string& filepath)
 
     // Load audio data into buffer
     ALenum alFormat = (decoder.outputChannels == 1) ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16; // Data was converted to signed 16-bit PCM (by sf_readf_short())
-    alBufferData(m_buffer, alFormat, (void*)pcmData, dataSize, decoder.outputSampleRate);
+    alBufferData(buffer_, alFormat, (void*)pcmData, dataSize, decoder.outputSampleRate);
     if ((error = alGetError()) != AL_NO_ERROR)
     {
         std::cerr << "OpenAL ERROR: " << error << std::endl;
-        alDeleteBuffers(1, &m_buffer);
+        alDeleteBuffers(1, &buffer_);
         free(pcmData);
         return;
     }
@@ -128,11 +128,11 @@ void Soundlib::Sound::LoadSoundRaw(const std::string& filepath, SoundFormat form
         case SoundFormat::STEREO8: alFormat = AL_FORMAT_STEREO8;
         default:                   alFormat = AL_FORMAT_STEREO16;
     }
-    alBufferData(m_buffer, alFormat, (void*)pcmData, length, sampleRate);
+    alBufferData(buffer_, alFormat, (void*)pcmData, length, sampleRate);
     if ((error = alGetError()) != AL_NO_ERROR)
     {
         std::cerr << "OpenAL ERROR: " << error << std::endl;
-        alDeleteBuffers(1, &m_buffer);
+        alDeleteBuffers(1, &buffer_);
         return;
     }
 }
