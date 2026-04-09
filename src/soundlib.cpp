@@ -46,10 +46,11 @@ void Soundlib::Exit()
 
 std::vector<std::string> Soundlib::GetDeviceList()
 {
+    std::vector<std::string> device_list;
+
     if (alcIsExtensionPresent(NULL, "ALC_ENUMERATE_ALL_EXT") == AL_TRUE)
     {
         const ALCchar *alc_devices = alcGetString(NULL, ALC_ALL_DEVICES_SPECIFIER); // Device names are separated by '\0', and this string ends with "\0\0"
-        std::vector<std::string> device_list;
         std::stringstream device;
         while (true)
         {
@@ -67,10 +68,9 @@ std::vector<std::string> Soundlib::GetDeviceList()
             }
             alc_devices++;
         }
-        return device_list;
     }
 
-    return {};
+    return device_list;
 }
 
 AttenuationModel Soundlib::GetAttenuationModel() noexcept
