@@ -38,7 +38,7 @@ Soundlib::SoundSource::SoundSource(const Sound& sound)
     }
 
     // Bind buffer to source
-    alSourcei(source_, AL_BUFFER, sound.m_buffer);
+    alSourcei(source_, AL_BUFFER, sound.buffer_);
     if ((error = alGetError()) != AL_NO_ERROR)
     {
         std::cerr << "OpenAL ERROR: " << error << std::endl;
@@ -51,7 +51,7 @@ void Soundlib::SoundSource::SetSound(const Sound& sound) noexcept
     ALenum error;
 
     // Bind buffer to source
-    alSourcei(source_, AL_BUFFER, sound.m_buffer);
+    alSourcei(source_, AL_BUFFER, sound.buffer_);
     if ((error = alGetError()) != AL_NO_ERROR)
     {
         std::cerr << "OpenAL ERROR: " << error << std::endl;
