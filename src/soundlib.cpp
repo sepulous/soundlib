@@ -12,22 +12,22 @@ using namespace Soundlib;
 
 bool Soundlib::Init()
 {
-    ALCdevice* device = alcOpenDevice(NULL);
+    ALCdevice *device = alcOpenDevice(NULL);
     if (device)
     {
-        ALCcontext* context = alcCreateContext(device, NULL);
+        ALCcontext *context = alcCreateContext(device, NULL);
         alcMakeContextCurrent(context);
         return true;
     }
     return false;
 }
 
-bool Soundlib::Init(const std::string& deviceName)
+bool Soundlib::Init(const std::string& device_name)
 {
-    ALCdevice* device = alcOpenDevice(deviceName.c_str());
+    ALCdevice *device = alcOpenDevice(device_name.c_str());
     if (device)
     {
-        ALCcontext* context = alcCreateContext(device, NULL);
+        ALCcontext *context = alcCreateContext(device, NULL);
         alcMakeContextCurrent(context);
         return true;
     }
@@ -37,8 +37,8 @@ bool Soundlib::Init(const std::string& deviceName)
 // This doesn't strictly need to be called at the end of the program, but some OpenAL implementations will complain if you don't
 void Soundlib::Exit()
 {
-    ALCcontext* context = alcGetCurrentContext();
-    ALCdevice* device = alcGetContextsDevice(context);
+    ALCcontext *context = alcGetCurrentContext();
+    ALCdevice *device = alcGetContextsDevice(context);
     alcMakeContextCurrent(NULL);
     alcDestroyContext(context);
     alcCloseDevice(device);
@@ -48,26 +48,26 @@ std::vector<std::string> Soundlib::GetDeviceList()
 {
     if (alcIsExtensionPresent(NULL, "ALC_ENUMERATE_ALL_EXT") == AL_TRUE)
     {
-        const ALCchar* alcDevicesStr = alcGetString(NULL, ALC_ALL_DEVICES_SPECIFIER); // Device names are separated by '\0', and this string ends with "\0\0"
-        std::vector<std::string> deviceList;
+        const ALCchar *alc_devices = alcGetString(NULL, ALC_ALL_DEVICES_SPECIFIER); // Device names are separated by '\0', and this string ends with "\0\0"
+        std::vector<std::string> device_list;
         std::stringstream device;
         while (true)
         {
-            if (*alcDevicesStr != '\0')
+            if (*alc_devices != '\0')
             {
-                device << *alcDevicesStr;
+                device << *alc_devices;
             }
             else
             {
-                deviceList.push_back(device.str());
+                device_list.push_back(device.str());
                 device.str("");
                 device.clear();
-                if (*(alcDevicesStr + 1) == '\0')
+                if (*(alc_devices + 1) == '\0')
                     break;
             }
-            alcDevicesStr++;
+            alc_devices++;
         }
-        return deviceList;
+        return device_list;
     }
 
     return {};
@@ -75,8 +75,8 @@ std::vector<std::string> Soundlib::GetDeviceList()
 
 AttenuationModel Soundlib::GetAttenuationModel() noexcept
 {
-    ALint attenuationModel = alGetInteger(AL_DISTANCE_MODEL);
-    switch (attenuationModel)
+    ALint attenuation_model = alGetInteger(AL_DISTANCE_MODEL);
+    switch (attenuation_model)
     {
         case AL_INVERSE_DISTANCE:          return AttenuationModel::INVERSE_DISTANCE;
         case AL_LINEAR_DISTANCE:           return AttenuationModel::LINEAR_DISTANCE;
@@ -87,9 +87,9 @@ AttenuationModel Soundlib::GetAttenuationModel() noexcept
     }
 }
 
-void Soundlib::SetAttenuationModel(AttenuationModel attenuationModel) noexcept
+void Soundlib::SetAttenuationModel(AttenuationModel attenuation_model) noexcept
 {
-    switch (attenuationModel)
+    switch (attenuation_model)
     {
         case AttenuationModel::INVERSE_DISTANCE:          alDistanceModel(AL_INVERSE_DISTANCE);
         case AttenuationModel::LINEAR_DISTANCE:           alDistanceModel(AL_LINEAR_DISTANCE);
@@ -149,9 +149,9 @@ Vector3 Soundlib::GetListenerPosition() noexcept
     return position;
 }
 
-void Soundlib::SetListenerVelocity(float velX, float velY, float velZ) noexcept
+void Soundlib::SetListenerVelocity(float x, float y, float z) noexcept
 {
-    alListener3f(AL_VELOCITY, velX, velY, velZ);
+    alListener3f(AL_VELOCITY, x, y, z);
 }
 
 void Soundlib::SetListenerVelocity(Vector3 velocity) noexcept
@@ -166,11 +166,11 @@ Vector3 Soundlib::GetListenerVelocity() noexcept
     return velocity;
 }
 
-void Soundlib::SetListenerOrientation(float forwardX, float forwardY, float forwardZ, float upX, float upY, float upZ) noexcept
+void Soundlib::SetListenerOrientation(float forward_x, float forward_y, float forward_z, float up_x, float up_y, float up_z) noexcept
 {
     ALfloat values[6] = {
-        forwardX, forwardY, forwardZ,
-        upX, upY, upZ
+        forward_x, forward_y, forward_z,
+        up_x, up_y, up_z
     };
     alListenerfv(AL_ORIENTATION, values);
 }

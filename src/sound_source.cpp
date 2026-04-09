@@ -102,98 +102,98 @@ void Soundlib::SoundSource::SetGain(float gain) noexcept
 
 float Soundlib::SoundSource::GetMinGain() noexcept
 {
-    ALfloat minGain;
-    alGetSourcef(source_, AL_MIN_GAIN, &minGain);
-    return minGain;
+    ALfloat min_gain;
+    alGetSourcef(source_, AL_MIN_GAIN, &min_gain);
+    return min_gain;
 }
 
-void Soundlib::SoundSource::SetMinGain(float minGain) noexcept
+void Soundlib::SoundSource::SetMinGain(float min_gain) noexcept
 {
-    alSourcef(source_, AL_MIN_GAIN, minGain);
+    alSourcef(source_, AL_MIN_GAIN, min_gain);
 }
 
 float Soundlib::SoundSource::GetMaxGain() noexcept
 {
-    ALfloat maxGain;
-    alGetSourcef(source_, AL_MAX_GAIN, &maxGain);
-    return maxGain;
+    ALfloat max_gain;
+    alGetSourcef(source_, AL_MAX_GAIN, &max_gain);
+    return max_gain;
 }
 
-void Soundlib::SoundSource::SetMaxGain(float maxGain) noexcept
+void Soundlib::SoundSource::SetMaxGain(float max_gain) noexcept
 {
-    alSourcef(source_, AL_MAX_GAIN, maxGain);
+    alSourcef(source_, AL_MAX_GAIN, max_gain);
 }
 
 float Soundlib::SoundSource::GetMaxDistance() noexcept
 {
-    ALfloat maxDistance;
-    alGetSourcef(source_, AL_MAX_DISTANCE, &maxDistance);
-    return maxDistance;
+    ALfloat max_distance;
+    alGetSourcef(source_, AL_MAX_DISTANCE, &max_distance);
+    return max_distance;
 }
 
-void Soundlib::SoundSource::SetMaxDistance(float maxDistance) noexcept
+void Soundlib::SoundSource::SetMaxDistance(float max_distance) noexcept
 {
-    alSourcef(source_, AL_MAX_DISTANCE, maxDistance);
+    alSourcef(source_, AL_MAX_DISTANCE, max_distance);
 }
 
 float Soundlib::SoundSource::GetReferenceDistance() noexcept
 {
-    ALfloat refDistance;
-    alGetSourcef(source_, AL_REFERENCE_DISTANCE, &refDistance);
-    return refDistance;
+    ALfloat ref_distance;
+    alGetSourcef(source_, AL_REFERENCE_DISTANCE, &ref_distance);
+    return ref_distance;
 }
 
-void Soundlib::SoundSource::SetReferenceDistance(float refDistance) noexcept
+void Soundlib::SoundSource::SetReferenceDistance(float ref_distance) noexcept
 {
-    alSourcef(source_, AL_REFERENCE_DISTANCE, refDistance);
+    alSourcef(source_, AL_REFERENCE_DISTANCE, ref_distance);
 }
 
 float Soundlib::SoundSource::GetRolloffFactor() noexcept
 {
-    ALfloat rolloffFactor;
-    alGetSourcef(source_, AL_ROLLOFF_FACTOR, &rolloffFactor);
-    return rolloffFactor;
+    ALfloat rolloff_factor;
+    alGetSourcef(source_, AL_ROLLOFF_FACTOR, &rolloff_factor);
+    return rolloff_factor;
 }
 
-void Soundlib::SoundSource::SetRolloffFactor(float rolloffFactor) noexcept
+void Soundlib::SoundSource::SetRolloffFactor(float rolloff_factor) noexcept
 {
-    alSourcef(source_, AL_ROLLOFF_FACTOR, rolloffFactor);
+    alSourcef(source_, AL_ROLLOFF_FACTOR, rolloff_factor);
 }
 
 float Soundlib::SoundSource::GetConeInnerAngle() noexcept
 {
-    ALfloat innerAngle;
-    alGetSourcef(source_, AL_CONE_INNER_ANGLE, &innerAngle);
-    return innerAngle;
+    ALfloat inner_angle;
+    alGetSourcef(source_, AL_CONE_INNER_ANGLE, &inner_angle);
+    return inner_angle;
 }
 
-void Soundlib::SoundSource::SetConeInnerAngle(float innerAngle) noexcept
+void Soundlib::SoundSource::SetConeInnerAngle(float inner_angle) noexcept
 {
-    alSourcef(source_, AL_CONE_INNER_ANGLE, innerAngle);
+    alSourcef(source_, AL_CONE_INNER_ANGLE, inner_angle);
 }
 
 float Soundlib::SoundSource::GetConeOuterAngle() noexcept
 {
-    ALfloat outerAngle;
-    alGetSourcef(source_, AL_CONE_OUTER_ANGLE, &outerAngle);
-    return outerAngle;
+    ALfloat outer_angle;
+    alGetSourcef(source_, AL_CONE_OUTER_ANGLE, &outer_angle);
+    return outer_angle;
 }
 
-void Soundlib::SoundSource::SetConeOuterAngle(float outerAngle) noexcept
+void Soundlib::SoundSource::SetConeOuterAngle(float outer_angle) noexcept
 {
-    alSourcef(source_, AL_CONE_OUTER_ANGLE, outerAngle);
+    alSourcef(source_, AL_CONE_OUTER_ANGLE, outer_angle);
 }
 
 float Soundlib::SoundSource::GetConeOuterGain() noexcept
 {
-    ALfloat outerGain;
-    alGetSourcef(source_, AL_CONE_OUTER_GAIN, &outerGain);
-    return outerGain;
+    ALfloat outer_gain;
+    alGetSourcef(source_, AL_CONE_OUTER_GAIN, &outer_gain);
+    return outer_gain;
 }
 
-void Soundlib::SoundSource::SetConeOuterGain(float outerGain) noexcept
+void Soundlib::SoundSource::SetConeOuterGain(float outer_gain) noexcept
 {
-    alSourcef(source_, AL_CONE_OUTER_GAIN, outerGain);
+    alSourcef(source_, AL_CONE_OUTER_GAIN, outer_gain);
 }
 
 float Soundlib::SoundSource::GetPitch() noexcept
@@ -211,7 +211,7 @@ void Soundlib::SoundSource::SetPitch(float pitch) noexcept
 Vector3 Soundlib::SoundSource::GetPosition() noexcept
 {
     Vector3 position;
-    alGetSourcefv(source_, AL_POSITION, (ALfloat*)&position);
+    alGetSourcefv(source_, AL_POSITION, (ALfloat *)&position);
     return position;
 }
 
@@ -222,13 +222,13 @@ void Soundlib::SoundSource::SetPosition(float x, float y, float z) noexcept
 
 void Soundlib::SoundSource::SetPosition(Vector3 position) noexcept
 {
-    alSourcefv(source_, AL_POSITION, (ALfloat*)&position);
+    alSourcefv(source_, AL_POSITION, (ALfloat *)&position);
 }
 
 Vector3 Soundlib::SoundSource::GetVelocity() noexcept
 {
     Vector3 velocity;
-    alGetSourcefv(source_, AL_VELOCITY, (ALfloat*)&velocity);
+    alGetSourcefv(source_, AL_VELOCITY, (ALfloat *)&velocity);
     return velocity;
 }
 
@@ -239,13 +239,13 @@ void Soundlib::SoundSource::SetVelocity(float x, float y, float z) noexcept
 
 void Soundlib::SoundSource::SetVelocity(Vector3 velocity) noexcept
 {
-    alSourcefv(source_, AL_VELOCITY, (ALfloat*)&velocity);
+    alSourcefv(source_, AL_VELOCITY, (ALfloat *)&velocity);
 }
 
 Vector3 Soundlib::SoundSource::GetDirection() noexcept
 {
     Vector3 direction;
-    alGetSourcefv(source_, AL_DIRECTION, (ALfloat*)&direction);
+    alGetSourcefv(source_, AL_DIRECTION, (ALfloat *)&direction);
     return direction;
 }
 
@@ -256,7 +256,7 @@ void Soundlib::SoundSource::SetDirection(float x, float y, float z) noexcept
 
 void Soundlib::SoundSource::SetDirection(Vector3 direction) noexcept
 {
-    alSourcefv(source_, AL_DIRECTION, (ALfloat*)&direction);
+    alSourcefv(source_, AL_DIRECTION, (ALfloat *)&direction);
 }
 
 bool Soundlib::SoundSource::IsLooping() noexcept

@@ -43,7 +43,7 @@ Soundlib::Sound::Sound(const std::string& filepath)
     LoadSound(filepath);
 }
 
-Soundlib::Sound::Sound(const std::string& filepath, SoundFormat format, float sampleRate)
+Soundlib::Sound::Sound(const std::string& filepath, SoundFormat format, float sample_rate)
 {
     ALenum error;
 
@@ -56,7 +56,7 @@ Soundlib::Sound::Sound(const std::string& filepath, SoundFormat format, float sa
         return;
     }
 
-    LoadSoundRaw(filepath, format, sampleRate);
+    LoadSoundRaw(filepath, format, sample_rate);
 }
 
 void Soundlib::Sound::LoadSound(const std::string& filepath)
@@ -73,66 +73,66 @@ void Soundlib::Sound::LoadSound(const std::string& filepath)
         return;
     }
 
-    ma_uint64 frameCount;
-    ma_decoder_get_length_in_pcm_frames(&decoder, &frameCount);
+    ma_uint64 frame_count;
+    ma_decoder_get_length_in_pcm_frames(&decoder, &frame_count);
 
-    int dataSize = frameCount * decoder.outputChannels * sizeof(short);
-    short* pcmData = (short*)malloc(dataSize);
+    int data_size = frame_count * decoder.outputChannels * sizeof(short);
+    short *pcm_data = (short *)malloc(data_size);
 
-    ma_uint64 framesRead;
-    ma_decoder_read_pcm_frames(&decoder, (void*)pcmData, frameCount, &framesRead);
-    if (framesRead != frameCount)
+    ma_uint64 frames_read;
+    ma_decoder_read_pcm_frames(&decoder, (void *)pcm_data, frame_count, &frames_read);
+    if (frames_read != frame_count)
     {
         std::cerr << "Failed to read all frames.\n";
         ma_decoder_uninit(&decoder);
-        free(pcmData);
+        free(pcm_data);
         return;
     }
     ma_decoder_uninit(&decoder);
 
     // Load audio data into buffer
-    ALenum alFormat = (decoder.outputChannels == 1) ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16; // Data was converted to signed 16-bit PCM (by sf_readf_short())
-    alBufferData(buffer_, alFormat, (void*)pcmData, dataSize, decoder.outputSampleRate);
+    ALenum al_format = (decoder.outputChannels == 1) ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16; // Data was converted to signed 16-bit PCM (by sf_readf_short())
+    alBufferData(buffer_, al_format, (void *)pcm_data, data_size, decoder.outputSampleRate);
     if ((error = alGetError()) != AL_NO_ERROR)
     {
         std::cerr << "OpenAL ERROR: " << error << std::endl;
         alDeleteBuffers(1, &buffer_);
-        free(pcmData);
-        return;
     }
 
-    free(pcmData);
+    free(pcm_data);
 }
 
-void Soundlib::Sound::LoadSoundRaw(const std::string& filepath, SoundFormat format, float sampleRate)
+void Soundlib::Sound::LoadSoundRaw(const std::string& filepath, SoundFormat format, float sample_rate)
 {
     ALenum error;
 
-    std::ifstream inFile(filepath, std::ios::ate | std::ios::binary);
-    if (!inFile) {
+    std::ifstream file(filepath, std::ios::ate | std::ios::binary);
+    if (!file) {
         throw std::runtime_error("Could not open input file.");
     }
 
-    inFile.seekg (0, inFile.end);
-    int length = inFile.tellg();
-    inFile.seekg (0, inFile.beg);
+    file.seekg (0, file.end);
+    int length = file.tellg();
+    file.seekg (0, file.beg);
 
-    char* pcmData = new char[length];
-    inFile.read(reinterpret_cast<char*>(pcmData), length);
+    char *pcm_data = new char[length];
+    file.read(reinterpret_cast<char *>(pcm_data), length);
 
-    ALenum alFormat;
+    ALenum al_format;
     switch (format)
     {
-        case SoundFormat::MONO8:   alFormat = AL_FORMAT_MONO8;
-        case SoundFormat::MONO16:  alFormat = AL_FORMAT_MONO16;
-        case SoundFormat::STEREO8: alFormat = AL_FORMAT_STEREO8;
-        default:                   alFormat = AL_FORMAT_STEREO16;
+        case SoundFormat::MONO8:   al_format = AL_FORMAT_MONO8;
+        case SoundFormat::MONO16:  al_format = AL_FORMAT_MONO16;
+        case SoundFormat::STEREO8: al_format = AL_FORMAT_STEREO8;
+        default:                   al_format = AL_FORMAT_STEREO16;
     }
-    alBufferData(buffer_, alFormat, (void*)pcmData, length, sampleRate);
+    alBufferData(buffer_, al_format, (void *)pcm_data, length, sample_rate);
+
     if ((error = alGetError()) != AL_NO_ERROR)
     {
         std::cerr << "OpenAL ERROR: " << error << std::endl;
         alDeleteBuffers(1, &buffer_);
-        return;
     }
+
+    free(pcm_data);
 }
