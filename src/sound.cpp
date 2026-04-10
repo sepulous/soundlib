@@ -119,7 +119,7 @@ void Soundlib::Sound::LoadSoundRaw(const std::string& filepath, SoundFormat form
     if ((error = alGetError()) != AL_NO_ERROR)
         error_ = Soundlib::Error::BUFFER_UPLOAD_FAIL;
 
-    free(pcm_data);
+    delete[] pcm_data;
 }
 
 Soundlib::Error Soundlib::Sound::GetError() noexcept
