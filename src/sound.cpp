@@ -10,7 +10,8 @@
 
 Soundlib::Sound::~Sound()
 {
-    alDeleteBuffers(1, &buffer_);
+    if (buffer_ != AL_NONE)
+        alDeleteBuffers(1, &buffer_);
 }
 
 Soundlib::Sound::Sound()

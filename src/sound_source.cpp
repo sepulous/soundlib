@@ -8,7 +8,8 @@ using namespace Soundlib;
 
 Soundlib::SoundSource::~SoundSource()
 {
-    alDeleteSources(1, &source_);
+    if (source_ != AL_NONE)
+        alDeleteSources(1, &source_);
 }
 
 Soundlib::SoundSource::SoundSource()
