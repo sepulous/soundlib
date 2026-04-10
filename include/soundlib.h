@@ -42,6 +42,17 @@ namespace Soundlib
         STEREO16
     };
 
+    enum class Error
+    {
+        NONE,
+        SOURCE_CREATE_FAIL,
+        SOURCE_BIND_FAIL,
+        BUFFER_CREATE_FAIL,
+        BUFFER_UPLOAD_FAIL,
+        FILE_OPEN_FAIL,
+        FILE_READ_FAIL
+    };
+
     class Sound
     {
         friend class SoundSource;
@@ -58,11 +69,14 @@ namespace Soundlib
             Sound(Sound&&) = delete;
             Sound& operator=(Sound&&) = delete;
 
+            Error GetError() noexcept;
+
             void LoadSound(const std::string&);
             void LoadSoundRaw(const std::string&, SoundFormat, float);
 
         private:
             unsigned buffer_;
+            Error error_ = Error::NONE;
     };
 
     class SoundSource
@@ -78,6 +92,7 @@ namespace Soundlib
             SoundSource(SoundSource&&) = delete;
             SoundSource& operator=(SoundSource&&) = delete;
 
+            Error GetError() noexcept;
             SourceState GetState() noexcept;
 
             void SetSound(const Sound&) noexcept;
@@ -132,6 +147,7 @@ namespace Soundlib
 
         private:
             unsigned source_;
+            Error error_ = Error::NONE;
     };
 
     bool Init();

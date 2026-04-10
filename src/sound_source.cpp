@@ -1,4 +1,3 @@
-#include <iostream>
 
 #include <AL/al.h>
 #include <AL/alc.h>
@@ -14,49 +13,34 @@ Soundlib::SoundSource::~SoundSource()
 
 Soundlib::SoundSource::SoundSource()
 {
-    ALenum error;
-
     // Create source
     alGenSources(1, &source_);
-    if ((error = alGetError()) != AL_NO_ERROR)
-    {
-        std::cerr << "OpenAL ERROR: " << error << std::endl;
-        return;
-    }
+    if (alGetError() != AL_NO_ERROR)
+        error_ = Soundlib::Error::SOURCE_CREATE_FAIL;
 }
 
 Soundlib::SoundSource::SoundSource(const Sound& sound)
 {
-    ALenum error;
-
     // Create source
     alGenSources(1, &source_);
-    if ((error = alGetError()) != AL_NO_ERROR)
+    if (alGetError() != AL_NO_ERROR)
     {
-        std::cerr << "OpenAL ERROR: " << error << std::endl;
+        error_ = Soundlib::Error::SOURCE_CREATE_FAIL;
         return;
     }
 
     // Bind buffer to source
     alSourcei(source_, AL_BUFFER, sound.buffer_);
-    if ((error = alGetError()) != AL_NO_ERROR)
-    {
-        std::cerr << "OpenAL ERROR: " << error << std::endl;
-        return;
-    }
+    if (alGetError() != AL_NO_ERROR)
+        error_ = Soundlib::Error::SOURCE_BIND_FAIL;
 }
 
 void Soundlib::SoundSource::SetSound(const Sound& sound) noexcept
 {
-    ALenum error;
-
     // Bind buffer to source
     alSourcei(source_, AL_BUFFER, sound.buffer_);
-    if ((error = alGetError()) != AL_NO_ERROR)
-    {
-        std::cerr << "OpenAL ERROR: " << error << std::endl;
-        return;
-    }
+    if (alGetError() != AL_NO_ERROR)
+        error_ = Soundlib::Error::SOURCE_BIND_FAIL;
 }
 
 void Soundlib::SoundSource::Play() noexcept
@@ -72,6 +56,11 @@ void Soundlib::SoundSource::Pause() noexcept
 void Soundlib::SoundSource::Stop() noexcept
 {
     alSourceStop(source_);
+}
+
+Soundlib::Error Soundlib::SoundSource::GetError() noexcept
+{
+    return error_;
 }
 
 SourceState Soundlib::SoundSource::GetState() noexcept

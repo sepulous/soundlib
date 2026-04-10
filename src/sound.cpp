@@ -1,4 +1,4 @@
-#include <iostream>
+
 #include <fstream>
 #include <cstdlib>
 
@@ -15,27 +15,22 @@ Soundlib::Sound::~Sound()
 
 Soundlib::Sound::Sound()
 {
-    ALenum error;
-
     // Create buffer
     alGenBuffers(1, &buffer_);
-    if ((error = alGetError()) != AL_NO_ERROR)
+    if (alGetError() != AL_NO_ERROR)
     {
-        std::cerr << "OpenAL ERROR: " << error << std::endl;
+        error_ = Soundlib::Error::BUFFER_CREATE_FAIL;
         alDeleteBuffers(1, &buffer_);
-        return;
     }
 }
 
 Soundlib::Sound::Sound(const std::string& filepath)
 {
-    ALenum error;
-
     // Create buffer
     alGenBuffers(1, &buffer_);
-    if ((error = alGetError()) != AL_NO_ERROR)
+    if (alGetError() != AL_NO_ERROR)
     {
-        std::cerr << "OpenAL ERROR: " << error << std::endl;
+        error_ = Soundlib::Error::BUFFER_CREATE_FAIL;
         alDeleteBuffers(1, &buffer_);
         return;
     }
@@ -45,13 +40,11 @@ Soundlib::Sound::Sound(const std::string& filepath)
 
 Soundlib::Sound::Sound(const std::string& filepath, SoundFormat format, float sample_rate)
 {
-    ALenum error;
-
     // Create buffer
     alGenBuffers(1, &buffer_);
-    if ((error = alGetError()) != AL_NO_ERROR)
+    if (alGetError() != AL_NO_ERROR)
     {
-        std::cerr << "OpenAL ERROR: " << error << std::endl;
+        error_ = Soundlib::Error::BUFFER_CREATE_FAIL;
         alDeleteBuffers(1, &buffer_);
         return;
     }
@@ -69,7 +62,7 @@ void Soundlib::Sound::LoadSound(const std::string& filepath)
     result = ma_decoder_init_file(filepath.c_str(), &config, &decoder);
     if (result != MA_SUCCESS)
     {
-        std::cerr << "Failed to open file: " << filepath << "\n";
+        error_ = Soundlib::Error::FILE_OPEN_FAIL;
         return;
     }
 
@@ -83,7 +76,7 @@ void Soundlib::Sound::LoadSound(const std::string& filepath)
     ma_decoder_read_pcm_frames(&decoder, (void *)pcm_data, frame_count, &frames_read);
     if (frames_read != frame_count)
     {
-        std::cerr << "Failed to read all frames.\n";
+        error_ = Soundlib::Error::FILE_READ_FAIL;
         ma_decoder_uninit(&decoder);
         free(pcm_data);
         return;
@@ -95,7 +88,7 @@ void Soundlib::Sound::LoadSound(const std::string& filepath)
     alBufferData(buffer_, al_format, (void *)pcm_data, data_size, decoder.outputSampleRate);
     if ((error = alGetError()) != AL_NO_ERROR)
     {
-        std::cerr << "OpenAL ERROR: " << error << std::endl;
+        error_ = Soundlib::Error::BUFFER_UPLOAD_FAIL;
         alDeleteBuffers(1, &buffer_);
     }
 
@@ -107,8 +100,10 @@ void Soundlib::Sound::LoadSoundRaw(const std::string& filepath, SoundFormat form
     ALenum error;
 
     std::ifstream file(filepath, std::ios::ate | std::ios::binary);
-    if (!file) {
-        throw std::runtime_error("Could not open input file.");
+    if (!file)
+    {
+        error_ = Soundlib::Error::FILE_OPEN_FAIL;
+        return;
     }
 
     file.seekg (0, file.end);
@@ -130,9 +125,14 @@ void Soundlib::Sound::LoadSoundRaw(const std::string& filepath, SoundFormat form
 
     if ((error = alGetError()) != AL_NO_ERROR)
     {
-        std::cerr << "OpenAL ERROR: " << error << std::endl;
+        error_ = Soundlib::Error::BUFFER_UPLOAD_FAIL;
         alDeleteBuffers(1, &buffer_);
     }
 
     free(pcm_data);
+}
+
+Soundlib::Error Soundlib::Sound::GetError() noexcept
+{
+    return error_;
 }
