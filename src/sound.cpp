@@ -109,10 +109,10 @@ void Soundlib::Sound::LoadSoundRaw(const std::string& filepath, SoundFormat form
     ALenum al_format;
     switch (format)
     {
-        case SoundFormat::MONO8:   al_format = AL_FORMAT_MONO8;
-        case SoundFormat::MONO16:  al_format = AL_FORMAT_MONO16;
-        case SoundFormat::STEREO8: al_format = AL_FORMAT_STEREO8;
-        default:                   al_format = AL_FORMAT_STEREO16;
+        case SoundFormat::MONO8:   al_format = AL_FORMAT_MONO8; break;
+        case SoundFormat::MONO16:  al_format = AL_FORMAT_MONO16; break;
+        case SoundFormat::STEREO8: al_format = AL_FORMAT_STEREO8; break;
+        default:                   al_format = AL_FORMAT_STEREO16; break;
     }
     alBufferData(buffer_, al_format, (void *)pcm_data, length, sample_rate);
 
