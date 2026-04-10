@@ -18,10 +18,7 @@ Soundlib::Sound::Sound()
     // Create buffer
     alGenBuffers(1, &buffer_);
     if (alGetError() != AL_NO_ERROR)
-    {
         error_ = Soundlib::Error::BUFFER_CREATE_FAIL;
-        alDeleteBuffers(1, &buffer_);
-    }
 }
 
 Soundlib::Sound::Sound(const std::string& filepath)
@@ -31,7 +28,6 @@ Soundlib::Sound::Sound(const std::string& filepath)
     if (alGetError() != AL_NO_ERROR)
     {
         error_ = Soundlib::Error::BUFFER_CREATE_FAIL;
-        alDeleteBuffers(1, &buffer_);
         return;
     }
 
@@ -45,7 +41,6 @@ Soundlib::Sound::Sound(const std::string& filepath, SoundFormat format, float sa
     if (alGetError() != AL_NO_ERROR)
     {
         error_ = Soundlib::Error::BUFFER_CREATE_FAIL;
-        alDeleteBuffers(1, &buffer_);
         return;
     }
 
@@ -86,11 +81,9 @@ void Soundlib::Sound::LoadSound(const std::string& filepath)
     // Load audio data into buffer
     ALenum al_format = (decoder.outputChannels == 1) ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16; // Data was converted to signed 16-bit PCM (by sf_readf_short())
     alBufferData(buffer_, al_format, (void *)pcm_data, data_size, decoder.outputSampleRate);
+
     if ((error = alGetError()) != AL_NO_ERROR)
-    {
         error_ = Soundlib::Error::BUFFER_UPLOAD_FAIL;
-        alDeleteBuffers(1, &buffer_);
-    }
 
     free(pcm_data);
 }
@@ -124,10 +117,7 @@ void Soundlib::Sound::LoadSoundRaw(const std::string& filepath, SoundFormat form
     alBufferData(buffer_, al_format, (void *)pcm_data, length, sample_rate);
 
     if ((error = alGetError()) != AL_NO_ERROR)
-    {
         error_ = Soundlib::Error::BUFFER_UPLOAD_FAIL;
-        alDeleteBuffers(1, &buffer_);
-    }
 
     free(pcm_data);
 }
