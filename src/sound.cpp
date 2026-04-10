@@ -18,7 +18,10 @@ Soundlib::Sound::Sound()
     // Create buffer
     alGenBuffers(1, &buffer_);
     if (alGetError() != AL_NO_ERROR)
+    {
         error_ = Soundlib::Error::BUFFER_CREATE_FAIL;
+        buffer_ = AL_NONE;
+    }
 }
 
 Soundlib::Sound::Sound(const std::string& filepath)
@@ -28,6 +31,7 @@ Soundlib::Sound::Sound(const std::string& filepath)
     if (alGetError() != AL_NO_ERROR)
     {
         error_ = Soundlib::Error::BUFFER_CREATE_FAIL;
+        buffer_ = AL_NONE;
         return;
     }
 
@@ -41,6 +45,7 @@ Soundlib::Sound::Sound(const std::string& filepath, SoundFormat format, float sa
     if (alGetError() != AL_NO_ERROR)
     {
         error_ = Soundlib::Error::BUFFER_CREATE_FAIL;
+        buffer_ = AL_NONE;
         return;
     }
 

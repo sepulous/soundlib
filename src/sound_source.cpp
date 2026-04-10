@@ -16,7 +16,10 @@ Soundlib::SoundSource::SoundSource()
     // Create source
     alGenSources(1, &source_);
     if (alGetError() != AL_NO_ERROR)
+    {
         error_ = Soundlib::Error::SOURCE_CREATE_FAIL;
+        source_ = AL_NONE;
+    }
 }
 
 Soundlib::SoundSource::SoundSource(const Sound& sound)
@@ -26,6 +29,7 @@ Soundlib::SoundSource::SoundSource(const Sound& sound)
     if (alGetError() != AL_NO_ERROR)
     {
         error_ = Soundlib::Error::SOURCE_CREATE_FAIL;
+        source_ = AL_NONE;
         return;
     }
 
