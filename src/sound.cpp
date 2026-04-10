@@ -65,7 +65,7 @@ void Soundlib::Sound::LoadSound(const std::string& filepath)
     ma_uint64 frame_count;
     ma_decoder_get_length_in_pcm_frames(&decoder, &frame_count);
 
-    int data_size = frame_count * decoder.outputChannels * sizeof(short);
+    size_t data_size = frame_count * decoder.outputChannels * sizeof(short);
     short *pcm_data = (short *)malloc(data_size);
 
     ma_uint64 frames_read;
@@ -100,7 +100,7 @@ void Soundlib::Sound::LoadSoundRaw(const std::string& filepath, SoundFormat form
     }
 
     file.seekg (0, file.end);
-    int length = file.tellg();
+    size_t length = file.tellg();
     file.seekg (0, file.beg);
 
     char *pcm_data = new char[length];
