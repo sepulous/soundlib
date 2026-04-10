@@ -15,6 +15,8 @@ include(FetchContent)
 if (USE_SYSTEM_OPENAL)
     find_package(OpenAL REQUIRED)
 else()
+    set(ALSOFT_EXAMPLES OFF CACHE BOOL "" FORCE)
+    set(ALSOFT_TESTS OFF CACHE BOOL "" FORCE)
     FetchContent_Declare(
         openal-soft
         GIT_REPOSITORY https://github.com/kcat/openal-soft.git
