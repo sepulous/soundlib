@@ -70,17 +70,18 @@ void Soundlib::Sound::LoadSound(const std::string& filepath)
 
     ma_uint64 frames_read;
     ma_decoder_read_pcm_frames(&decoder, (void *)pcm_data, frame_count, &frames_read);
-    ma_decoder_uninit(&decoder);
     if (frames_read != frame_count)
     {
         error_ = Soundlib::Error::FILE_READ_FAIL;
         free(pcm_data);
+        ma_decoder_uninit(&decoder);
         return;
     }
 
     // Load audio data into buffer
     ALenum al_format = (decoder.outputChannels == 1) ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16; // Data was converted to signed 16-bit PCM (by sf_readf_short())
     alBufferData(buffer_, al_format, (void *)pcm_data, data_size, decoder.outputSampleRate);
+    ma_decoder_uninit(&decoder);
 
     if ((error = alGetError()) != AL_NO_ERROR)
         error_ = Soundlib::Error::BUFFER_UPLOAD_FAIL;
